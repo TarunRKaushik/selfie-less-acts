@@ -21,7 +21,7 @@ pip install docker-py
 
 Each of the containers can be placed in separate servers to maintain microservice architecture.
 For fault tolerance and scalability, the acts server is maintained by running on multiple containers which are increased or decreased depending on the need for scaling up or down.
-To maintain persistant data among all running containers, the data contained in each container, ```/static``` is stored in a docker volume. Thus, the created volume should contain the contents of the 'static' folder
+To maintain persistant data among all running containers, the data contained in each container, ```/static``` is stored in a docker volume. Thus, the created volume should contain the contents of the ```static``` folder.
 
 https://docs.docker.com/storage/volumes/
 
@@ -41,7 +41,7 @@ For the acts container:
 ```
 docker run --name acts_0 -p <req_port>:8000 -v <volume_name>:/usr/bin/static <imageid> 
 ```
-The path after the volume name corresponds to wherever the flask file is stored in the container. In this case, /usr/bin/static.
+The path after the volume name corresponds to wherever the flask file is stored in the container. In this case, ```/usr/bin/static```.
 
 Next the orchestrator needs to be run on the same server as the acts-container. By default, the orchestrator listens at port 80. This can be changed in the source code of orchestrator.py by changing the ```app.run()``` function's parameters.
 Run the orchestrator using
