@@ -9,10 +9,11 @@ Docker must be installed on the server-system before the application can be run 
 https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce
 
 
-Flask module along with flask_cors must be installed in the pythoon environment used.
+Flask module along with flask_cors must be installed to build the servers. Docker py is also used as a dokcer API with python
 ```
 pip install flask
 pip install flask_cors
+pip install docker-py
 ```
 
 
@@ -42,4 +43,8 @@ Run the orchestrator using
 python orchestrator.py
 ```
 
-If the servers are cloud based, such as amazon ec2 instances, it would be ideal to use an aws load balancer to forward requests to the orchestrator on one instance and the acts container on the other one.
+The orchestrator ensures fault tolerance by polling each container every second and in case of any faults, the container is immediately removed and a new one is started in its place.It also ensures scalability by increasing the number of containers running based on the number of requests made in the last two minutes. For every 20 extra requests a new container is added.
+
+Ex: if 100 requests are made in the past 2 minutes, the number of containers are increased to 5. If only 3 requests are made in the subsequent two minutes, the number of containers are reduced back to 1.
+
+Note:If the servers are cloud based, such as amazon ec2 instances, it would be ideal to use an aws load balancer to forward requests to the orchestrator on one instance and the acts container on the other one.
